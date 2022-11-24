@@ -1,3 +1,10 @@
 name = "rorycat"
 main = "src/index.ts"
 compatibility_date = "2022-11-24"
+
+# Connect to D1
+[[ d1_databases ]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "rory"
+database_id = "90e5405e-dbea-4d57-9e74-80ead9e0493b"
+preview_database_id = "90e5405e-dbea-4d57-9e74-80ead9e0493b"
