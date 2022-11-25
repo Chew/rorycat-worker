@@ -8,6 +8,7 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import {Image} from "./types";
+import {mainContent} from "./layout";
 
 export interface Env {
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
@@ -37,8 +38,13 @@ export default {
 			}
 			if (result.success && result.results !== undefined) {
 				// Get first row
-				const row: Image = result.results[0];
-				return new Response("Hello! I am rory " + row.id + " with URL " + row.url, {status: 200});
+				const image: Image = result.results[0];
+				// retrieve local HTML file from ./rory.html
+				// replace {{ id }} with the url of the image
+				let newHtml = mainContent.replace("{{ id }}", image.id.toString());
+				newHtml = newHtml.replace("{{ url }}", image.url);
+				console.log(newHtml);
+				return new Response(newHtml, {headers: {'content-type': 'text/html;charset=UTF-8',}, status: 200});
 			} else {
 				return new Response("No results", {status: 500});
 			}
